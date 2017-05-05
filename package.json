@@ -1,0 +1,22 @@
+{
+  "name": "umap.ai",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.2.6",
+    "ejs": "*"
+  },
+  "description": "Created with [Nodeclipse](https://github.com/Nodeclipse/nodeclipse-1)\r  ([Eclipse Marketplace](http://marketplace.eclipse.org/content/nodeclipse), [site](http://www.nodeclipse.org))",
+  "main": "app.js",
+  "devDependencies": {},
+  "keywords": [
+    "umap",
+    "gis",
+    "ai"
+  ],
+  "author": "JianKai Wang",
+  "license": "MIT"
+}
