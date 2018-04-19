@@ -1,6 +1,6 @@
 # umap.ai
 
-
+[![Build Status](https://travis-ci.org/jiankaiwang/umap.svg?branch=master)](https://travis-ci.org/jiankaiwang/umap)
 
 Umap is the open source for GIS framework.
 
