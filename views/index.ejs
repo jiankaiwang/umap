@@ -2,10 +2,223 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="description" content="Umap is the general GIS purpose framework based on nodejs." />
+    <meta name="author" content="jiankai wang, https://jiankaiwang.no-ip.biz/" />
+
+    <!-- css -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/node_modules/leaflet/dist/leaflet.css" rel="stylesheet" />
+    <link href="/node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css" rel="stylesheet" />      
+    <link href='/src/style.css' rel='stylesheet' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div id="mapid"></div>
+
+    <!-- menu -->
+    <div class="menu">
+      <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-1 col-md-1 show-curosr">
+          <a href="#" onclick="showNavInfo();"><i class="fa fa-bars fa-half2x" aria-hidden="true"></i></a>
+        </div>
+        <div class="col-xs-8 col-md-8">
+          <input type="text" class="form-control input-no-border input-more-width" placeholder="<%= searchingtext %>">
+        </div>
+        <div class="col-xs-1 col-md-1">
+          <div class="menu-div"></div>
+        </div>
+        <div class="col-xs-1 col-md-1 show-curosr">
+          <a href="#" class="show-detail" onclick="showDetailList();"><i class="fa fa-external-link-square fa-half2x margin-left--7px" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="detail display-none">
+      <div class="container-fluid">
+      </div>
+    </div>
+
+    <!-- user -->
+    <div class="user show-curosr h-center">
+      <a href="#" title="<%= login %>" data-toggle="modal" data-target="#loginsection">
+        <i class="fa fa-user-circle fa-2x v-middle" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <!-- logo -->
+    <div class="mark"><img class="logo" src='img/umap_logo_min.png'/></div>
+
+    <!-- nav -->
+    <div id="nav">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-10 col-md-10">
+            <h3><div class="meau-mark"><img class="logo" src='img/umap_logo_min.png'/></div></h3>
+          </div>
+          <a href="#">
+            <div class="col-xs-2 col-md-2 show-curosr" onclick="showNavInfo();">
+              <h3><i class="fa fa-times" aria-hidden="true"></i></h3>
+            </div>
+          </a>
+        </div>
+        <hr class="hr-menu" />
+        <!-- main service -->
+        <div class="row">
+          <a data-toggle="collapse" data-parent="#accordion" href="#example">
+            <div class="col-xs-2 col-md-2">
+              <h4><i class="fa fa-exclamation-triangle v-middle" aria-hidden="true"></i></h4>
+            </div>
+            <div class="col-xs-10 col-md-10">
+              <h4><%= example %></h4>
+            </div>
+          </a>
+        </div>
+        <div id="example" class="panel-collapse collapse">
+          <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-10 col-md-10">
+              <a href="#" title="<%= point %>" onclick="addPointService()">
+                <h5><%= point %> <small class="map-on"></small></h5>
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-10 col-md-10">
+              <a href="#" title="<%= line %>" onclick="">
+                <h5><%= line %> <small class="map-on"></small></h5>
+              </a>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-xs-2 col-md-2"></div>
+              <div class="col-xs-10 col-md-10">
+                <a href="#" title="<%= polygon %>" onclick="">
+                  <h5><%= polygon %> <small class="map-on"></small></h5>
+                </a>
+              </div>
+            </div>
+        </div>     
+        <div class="row">
+          <a data-toggle="collapse" data-parent="#accordion" href="#editor">
+            <div class="col-xs-2 col-md-2">
+              <h4><i class="fa fa-pencil-square-o v-middle" aria-hidden="true"></i></h4>
+            </div>
+            <div class="col-xs-10 col-md-10">
+              <h4><%= custom %></h4>
+            </div>
+          </a>
+        </div>
+        <div id="editor" class="panel-collapse collapse">
+          <!-- point -->
+          <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-10 col-md-10">
+              <a href="#" title="<%= addmarker %>" onclick="addPointService();">
+                <h5><%= addmarker %> <small class="map-on"></small></h5>
+              </a>
+            </div>
+          </div>		
+          <!-- line -->
+          <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-10 col-md-10">
+              <a href="#" title="<%= addline %>" onclick="addLineService();">
+                <h5><%= addline %> <small class="map-on"></small></h5>
+              </a>
+            </div>
+          </div>	
+          <!-- polygon -->
+          <div class="row">
+            <div class="col-xs-2 col-md-2"></div>
+            <div class="col-xs-10 col-md-10">
+              <a href="#" title="<%= addpolygon %>" onclick="addPolygonService();">
+                <h5><%= addpolygon %> <small class="map-on"></small></h5>
+              </a>
+            </div>
+          </div>							
+        </div>	        
+        <hr class="hr-menu" />
+        <!-- additional information -->
+        <div class="row">
+          <a href="<%= changelangurl %>">
+            <div class="col-xs-2 col-md-2">
+              <h4><i class="fa fa-language v-middle" aria-hidden="true"></i></h4>
+            </div>
+            <div class="col-xs-10 col-md-10">
+              <h4><%= changelang %></h4>
+            </div>
+          </a>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <a href="https://github.com/jiankaiwang/umap" target=_blank><h5><%= sourcecode %></h5></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <a href="mailto:gljankai@gmail.com" target=_blank><h5><%= opinion %></h5></a>
+          </div>
+        </div>
+      </div>	
+    </div>
+
+    <!-- icon tip -->
+    <div class="legend">
+      <div class="container-fluid legendBody">
+      </div>
+    </div>
+      
+    <!-- Modal -->
+    <div class="modal fade" id="loginsection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"><%= loginTitle %></h4>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-pills nav-justified">
+              <li class="active">
+                <a data-toggle="tab" href="#dropbox"><i class="fa fa-dropbox" aria-hidden="true"></i> Dropbox</a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#googledrive"><i class="fa fa-google" aria-hidden="true"></i> Drive</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div id="dropbox" class="tab-pane fade in active"></div>
+              <div id="googledrive" class="tab-pane fade"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><%= closeLogin %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- detail -->
+    <div id="detail"></div>
+
+    <!-- chatbot -->
+    <div id="chatbot"></div>
+
+    <!-- javascript -->
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>	
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>	
+    <script src="/node_modules/leaflet/dist/leaflet.js"></script>
+    <script src="/node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.min.js"></script>  
+    <script src="/async/async.min.js"></script>
+    <script src="/seed/Common.js"></script>
+    <script src="/src/config.js"></script>  
+    <script src="/src/currentPosition.js"></script>  
+    <script src="/src/addMenu.js"></script>
+    <script src="/src/general.js"></script>  
   </body>
 </html>

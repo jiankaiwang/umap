@@ -1,20 +1,50 @@
-
-
 # umap.ai
 
 
 
-## Usage
+Umap is the open source for GIS framework.
+
+![](./public/img/ui.png)
 
 
 
-## Developing
+## Start the service.
+
+### Clone the Reposiroty
+
+```shell
+cd ~
+git clone https://github.com/jiankaiwang/umap.git
+cd ./umap
+```
 
 
 
-### Tools
+### Deployment
 
-Created with [Nodeclipse](https://github.com/Nodeclipse/nodeclipse-1)
- ([Eclipse Marketplace](http://marketplace.eclipse.org/content/nodeclipse), [site](http://www.nodeclipse.org))   
+```shell
+npm install --save
+sudo npm start
+```
 
-Nodeclipse is free open-source project that grows with your contributions.
+
+
+## Preparation
+
+#### Redis or Express-session
+
+*   Edit the app.js.
+
+```javascript
+// the following setting is using origin express-session
+app.use(express.cookieParser());
+app.use(session({
+  secret: wo.getSessionHash(), 
+  cookie: {maxAge: 30 * 60 * 1000},	// existing time period : ms
+  resave: false,
+  saveUninitialized: true
+}));
+```
+
+
+
